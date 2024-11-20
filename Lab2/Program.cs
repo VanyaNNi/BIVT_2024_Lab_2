@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Metrics;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 public class Program
@@ -292,7 +293,31 @@ public class Program
         int answer3 = 0;
 
         // code here
-
+        double x, y;
+        for (int i = 0; i < n; i++)
+        {
+            double.TryParse(Console.ReadLine(), out x);
+            double.TryParse(Console.ReadLine(), out y);
+            if (x > 0 && y > 0)
+            {
+                Console.WriteLine("1");
+                answer1++;
+            }
+            if(x < 0 && y > 0)
+            {
+                Console.WriteLine("2");
+            }
+            if(x < 0 && y < 0)
+            {
+                Console.WriteLine("3");
+                answer3++;
+            }
+            if(x > 0 && y < 0)
+            {
+                Console.WriteLine("4");
+            }
+        }
+        Console.Write($"{answer1},{answer3}");
         // end
 
         return (answer1, answer3);
@@ -303,7 +328,7 @@ public class Program
         double answerLength = double.MaxValue;
 
         // code here
-        for(int i = 0;i < n; i++)
+        for(int i = 1;i <= n; i++)
         {
             double x = double.Parse(Console.ReadLine());
             double y = double.Parse(Console.ReadLine());
@@ -445,7 +470,7 @@ public class Program
             var smth_2 = Console.ReadLine();
             bool check_x = double.TryParse(smth_1, out double x);
             bool check_y = double.TryParse(smth_2, out double y);
-            if ((check_x == true) || (check_y != true))
+            if ((check_x == true) || (check_y == true))
             {
                 if (((x - a) * (x - a) + (y - b) * (y - b)) <= r * r) answer++;
             }
@@ -485,14 +510,14 @@ public class Program
         int answer = 0, n = 0;
 
         // code here
-        bool check_1 = true;
+        var smth = Console.ReadLine();
+        bool check_1 = double.TryParse(smth, out double time);
 
         while(check_1)
         {
-            var smth = Console.ReadLine();
-            bool check_2= double.TryParse(smth, out double time);
-            check_1 = check_2;
             if (time <= norm) answer++;
+            smth = Console.ReadLine();
+            check_1= double.TryParse(smth, out time);
         }
         Console.WriteLine(answer);
         // end
@@ -525,14 +550,10 @@ public class Program
         double answerLength = double.MaxValue;
 
         // code here
-        bool check_x = true;
-        bool check_y = true;
-        while((check_x == true) && (check_y == true))
+        bool check_x = double.TryParse(Console.ReadLine(), out double x);
+        bool check_y = double.TryParse(Console.ReadLine(), out double y);
+        while ((check_x == true) && (check_y == true))
         {
-            var smth_1 = Console.ReadLine();
-            var smth_2 = Console.ReadLine();
-            check_x = double.TryParse(smth_1, out double x);
-            check_y = double.TryParse(smth_2, out double y);
             double length = Math.Sqrt(x * x + y * y);
             n++;
             if (length < answerLength)
@@ -540,6 +561,8 @@ public class Program
                 answer = n;
                 answerLength = length;
             }
+            check_x = double.TryParse(Console.ReadLine(), out x);
+            check_y = double.TryParse(Console.ReadLine(), out y);
         }
         Console.WriteLine(answer);
         Console.WriteLine(answerLength);
@@ -575,26 +598,22 @@ public class Program
         double avg = 0.0;
 
         // code here;
-        double marks = 0;
+        double all_marks = 0;
+        double mark, count = 0;
         bool check = true;
-        while (check)
-        {
-            bool satisfactory = true;
-            for(int i = 0;i < 4;i++)
+        while (check) {
+            bool satisf = true;
+            for (int j = 0; j < 4; j++)
             {
-                var smth = Console.ReadLine();
-                check = double.TryParse(smth, out double mark);
-                marks += mark;
-                if (mark < 3)
-                {
-                    satisfactory = false;
-                    answer++;
-                }
+                check = double.TryParse(Console.ReadLine(), out mark);
+                if (check == false) break;
+                all_marks += mark;
+                if (mark == 2) satisf = false;
+                count++;
             }
-            n++;
-
+            if (satisf == false) answer += 1;
         }
-        avg = marks / (4 * n);
+        avg = all_marks / count;
         Console.WriteLine(answer);
         Console.WriteLine(avg);
         // end
