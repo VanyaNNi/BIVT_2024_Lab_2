@@ -470,7 +470,7 @@ public class Program
             var smth_2 = Console.ReadLine();
             bool check_x = double.TryParse(smth_1, out double x);
             bool check_y = double.TryParse(smth_2, out double y);
-            if ((check_x == true) || (check_y == true))
+            if ((check_x == true) && (check_y == true))
             {
                 if (((x - a) * (x - a) + (y - b) * (y - b)) <= r * r) answer++;
             }
